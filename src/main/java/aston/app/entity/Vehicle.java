@@ -1,4 +1,4 @@
-package com.example.entity;
+package aston.app.entity;
 
 import lombok.Data;
 

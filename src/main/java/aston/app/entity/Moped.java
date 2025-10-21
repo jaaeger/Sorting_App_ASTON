@@ -1,4 +1,4 @@
-package com.example.entity;
+package aston.app.entity;
 
 public class Moped extends Vehicle{
     public Moped(Long id, String model, int price) {

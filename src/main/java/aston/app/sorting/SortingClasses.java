@@ -1,4 +1,4 @@
-package com.example.sort;
+package aston.app.sorting;
 
 public class SortingClasses{
 
