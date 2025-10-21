@@ -1,5 +1,5 @@
 package com.example.sort;
 
-public class SortingClasses {
+public class SortingClasses{
 
 }
