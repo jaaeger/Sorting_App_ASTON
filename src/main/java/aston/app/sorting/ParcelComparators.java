@@ -17,19 +17,17 @@ public final class ParcelComparators {
         return Comparator.comparing(Parcel::getTrackingNumber);
     }
 
-    public static <T extends Parcel> Comparator<Parcel> byRecipientNameDesc() {
+    public static Comparator<Parcel> byRecipientNameDesc() {
         return Comparator.comparing(Parcel::getRecipientName).reversed();
     }
 
-    public static <T extends Parcel> Comparator<Parcel> byWeightDesc() {
+    public static Comparator<Parcel> byWeightDesc() {
         return Comparator.comparing(Parcel::getWeight).reversed();
     }
 
-    public static <T extends Parcel> Comparator<Parcel> byTrackingNumberDesc() {
+    public static Comparator<Parcel> byTrackingNumberDesc() {
         return Comparator.comparing(Parcel::getTrackingNumber).reversed();
     }
-
-
 
     private ParcelComparators() {}
 }

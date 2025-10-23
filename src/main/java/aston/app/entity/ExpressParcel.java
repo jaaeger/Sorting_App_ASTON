@@ -4,16 +4,16 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Map;
 
 @Getter
-@ToString
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class ExpressParcel extends Parcel {
-    private final LocalDateTime deliveryDeadline;
+    private final LocalDate deliveryDeadline;
 
-    public ExpressParcel(String recipientName, double weight, int trackingNumber, LocalDateTime deliveryDeadline) {
+    public ExpressParcel(String recipientName, double weight, int trackingNumber, LocalDate deliveryDeadline) {
         super(recipientName, weight, trackingNumber);
 
         this.deliveryDeadline = deliveryDeadline;
@@ -24,9 +24,9 @@ public class ExpressParcel extends Parcel {
     }
 
     public static class ExpressBuilder extends ParcelBuilder<ExpressParcel, ExpressBuilder> {
-        private LocalDateTime deliveryDeadline;
+        private LocalDate deliveryDeadline;
 
-        public ExpressBuilder deliveryDeadline(LocalDateTime deliveryDeadline) {
+        public ExpressBuilder deliveryDeadline(LocalDate deliveryDeadline) {
             this.deliveryDeadline = deliveryDeadline;
             return this;
         }
@@ -47,7 +47,7 @@ public class ExpressParcel extends Parcel {
                 .recipientName(data.get("recipientName"))
                 .weight(Double.parseDouble(data.get("weight")))
                 .trackingNumber(Integer.parseInt(data.get("trackingNumber")))
-                .deliveryDeadline(LocalDateTime.parse(data.get("deliveryDeadline")))
+                .deliveryDeadline(LocalDate.parse(data.get("deliveryDeadline")))
                 .build();
     }
 }

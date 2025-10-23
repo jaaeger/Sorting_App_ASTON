@@ -7,7 +7,7 @@ import lombok.ToString;
 import java.util.Map;
 
 @Getter
-@ToString
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class StandardParcel extends Parcel {
     private final int maxDimension;
