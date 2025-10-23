@@ -1,26 +1,14 @@
-package ru.aston.team.sortapp.input;
+package aston.app.entity;
 
-import java.util.Objects;
+public abstract class Parcel implements Comparable<Parcel> {
+    protected final String recipientName;
+    protected final double weight;
+    protected final int trackingNumber;
 
-public class Parcel {
-    private final String recipientName;
-    private final double weight;
-    private final int trackingNumber;
-
-    private Parcel(Builder builder) {
-        if (builder.recipientName == null || builder.recipientName.isBlank()) {
-            throw new IllegalArgumentException("Recipient name cannot be empty");
-        }
-        if (builder.weight <= 0) {
-            throw new IllegalArgumentException("Parcel weight must be greater than 0");
-        }
-        if (builder.trackingNumber <= 0) {
-            throw new IllegalArgumentException("Tracking number must be positive");
-        }
-
-        this.recipientName = builder.recipientName;
-        this.weight = builder.weight;
-        this.trackingNumber = builder.trackingNumber;
+    protected Parcel(String recipientName, double weight, int trackingNumber) {
+        this.recipientName = recipientName;
+        this.weight = weight;
+        this.trackingNumber = trackingNumber;
     }
 
     public String getRecipientName() {
@@ -36,48 +24,17 @@ public class Parcel {
     }
 
     @Override
+    public int compareTo(Parcel other) {
+        int cmp = recipientName.compareTo(other.recipientName);
+        if (cmp != 0) return cmp;
+        cmp = Double.compare(weight, other.weight);
+        if (cmp != 0) return cmp;
+        return Integer.compare(trackingNumber, other.trackingNumber);
+    }
+
+    @Override
     public String toString() {
-        return String.format("Parcel{name='%s', weight=%.2f, trackingNumber=%d}",
-                recipientName, weight, trackingNumber);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Parcel)) return false;
-        Parcel parcel = (Parcel) o;
-        return Double.compare(parcel.weight, weight) == 0 &&
-                trackingNumber == parcel.trackingNumber &&
-                recipientName.equals(parcel.recipientName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(recipientName, weight, trackingNumber);
-    }
-
-    public static class Builder {
-        private String recipientName;
-        private double weight;
-        private int trackingNumber;
-
-        public Builder setRecipientName(String recipientName) {
-            this.recipientName = recipientName;
-            return this;
-        }
-
-        public Builder setWeight(double weight) {
-            this.weight = weight;
-            return this;
-        }
-
-        public Builder setTrackingNumber(int trackingNumber) {
-            this.trackingNumber = trackingNumber;
-            return this;
-        }
-
-        public Parcel build() {
-            return new Parcel(this);
-        }
+        return String.format("%s{name='%s', weight=%.2f, trackingNumber=%d}",
+                getClass().getSimpleName(), recipientName, weight, trackingNumber);
     }
 }
