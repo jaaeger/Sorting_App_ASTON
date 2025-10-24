@@ -17,28 +17,25 @@ public class SortingClassesTest {
     private static Parcel parcel1, parcel2, parcel3, parcel4;
 
     @BeforeAll
-    public static void setupAll() {
-        Map<String, String> data = new HashMap<>();
+    public static void setUpAll() {
+        parcel1 = createParcel("12");
+        parcel2 = createParcel("10");
+        parcel3 = createParcel("7");
+        parcel4 = createParcel("11");
+    }
 
+    private static Parcel createParcel(String weight) {
+        Map<String, String> data = new HashMap<>();
         data.put("type", "STANDARD");
         data.put("recipientName", "user1");
-        data.put("weight", "12");
+        data.put("weight", weight);
         data.put("trackingNumber", "5323");
         data.put("maxDimension", "200");
-        parcel1 = Parcel.createFromMap(data);
-
-        data.put("weight", "10");
-        parcel2 = Parcel.createFromMap(data);
-
-        data.put("weight", "7");
-        parcel3 = Parcel.createFromMap(data);
-
-        data.put("weight", "11");
-        parcel4 = Parcel.createFromMap(data);
+        return Parcel.createFromMap(data);
     }
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         list = new ArrayList<>();
         list.add(parcel1);
         list.add(parcel2);
@@ -47,7 +44,7 @@ public class SortingClassesTest {
     }
 
     @Test
-    public void testQuickSortByWeight() {
+    public void when_QuickSortByWeight_then_ParcelsSortedByWeightAscending() {
         SortingClasses.sort("quickSort", list, ParcelComparators.byWeight());
 
         Assertions.assertEquals(parcel3, list.get(0));
@@ -57,7 +54,7 @@ public class SortingClassesTest {
     }
 
     @Test
-    public void testMergeSortByWeight() {
+    public void when_MergeSortByWeight_then_ParcelsSortedByWeightAscending() {
         SortingClasses.sort("mergeSort", list, ParcelComparators.byWeight());
 
         Assertions.assertEquals(parcel3, list.get(0));
@@ -67,7 +64,7 @@ public class SortingClassesTest {
     }
 
     @Test
-    public void testQuickSortNaturalOrder() {
+    public void when_QuickSortNaturalOrder_then_ParcelsSortedByNaturalOrder() {
         SortingClasses.sort("quickSort", list, Comparator.naturalOrder());
 
         Assertions.assertEquals(parcel3, list.get(0));
@@ -77,7 +74,7 @@ public class SortingClassesTest {
     }
 
     @Test
-    public void testMergeSortNaturalOrder() {
+    public void when_MergeSortNaturalOrder_then_ParcelsSortedByNaturalOrder() {
         SortingClasses.sort("mergeSort", list, Comparator.naturalOrder());
 
         Assertions.assertEquals(parcel3, list.get(0));

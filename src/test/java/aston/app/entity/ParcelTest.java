@@ -1,7 +1,7 @@
 package aston.app.entity;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -10,57 +10,60 @@ import java.util.Map;
 
 public class ParcelTest {
     public static Map<String, String> data;
-    public static String recipientName, weight, trackingNumber, maxDimension, deliveryDeadline, destinationCountry;
 
-    @BeforeAll
-    public static void setupAll() {
-        recipientName = "user1";
-        weight = "12";
-        trackingNumber = "5323";
-        maxDimension = "200";
-        deliveryDeadline = "2024-01-15";
-        destinationCountry = "Англия";
-
+    @BeforeEach
+    public void setUp() {
         data = new HashMap<>();
-
-        data.put("recipientName", recipientName);
-        data.put("weight", weight);
-        data.put("trackingNumber", trackingNumber);
+        data.put("recipientName", "user1");
+        data.put("weight", "12.5");
+        data.put("trackingNumber", "5323");
     }
 
     @Test
-    public void createStandardParcel() {
+    public void when_CreateStandardParcelWithMaxDimension_then_ParcelCreated() {
         data.put("type", "STANDARD");
-        data.put("maxDimension", maxDimension);
+        data.put("maxDimension", "200");
+
         StandardParcel parcel = (StandardParcel) Parcel.createFromMap(data);
 
-        Assertions.assertEquals(recipientName, parcel.recipientName);
-        Assertions.assertEquals(Double.parseDouble(weight), parcel.weight);
-        Assertions.assertEquals(Integer.parseInt(trackingNumber), parcel.trackingNumber);
-        Assertions.assertEquals(Integer.parseInt(maxDimension), parcel.getMaxDimension());
+        Assertions.assertEquals("user1", parcel.recipientName);
+        Assertions.assertEquals(12.5, parcel.weight);
+        Assertions.assertEquals(5323, parcel.trackingNumber);
+        Assertions.assertEquals(200, parcel.getMaxDimension());
     }
 
     @Test
-    public void createExpressParcel() {
+    public void when_CreateExpressParcelWithDeliveryDeadline_then_ExpressParcelCreated() {
         data.put("type", "EXPRESS");
-        data.put("deliveryDeadline", deliveryDeadline);
+        data.put("deliveryDeadline", "2024-01-15");
+
         ExpressParcel parcel = (ExpressParcel) Parcel.createFromMap(data);
 
-        Assertions.assertEquals(recipientName, parcel.recipientName);
-        Assertions.assertEquals(Double.parseDouble(weight), parcel.weight);
-        Assertions.assertEquals(Integer.parseInt(trackingNumber), parcel.trackingNumber);
-        Assertions.assertEquals(LocalDate.parse(deliveryDeadline), parcel.getDeliveryDeadline());
+        Assertions.assertEquals("user1", parcel.recipientName);
+        Assertions.assertEquals(12.5, parcel.weight);
+        Assertions.assertEquals(5323, parcel.trackingNumber);
+        Assertions.assertEquals(LocalDate.of(2024, 1, 15), parcel.getDeliveryDeadline());
     }
 
     @Test
-    public void createInternationalParcel() {
+    public void when_CreateInternationalParcelWithDestinationCountry_then_InternationalParcelCreated() {
         data.put("type", "INTERNATIONAL");
-        data.put("destinationCountry", destinationCountry);
+        data.put("destinationCountry", "Англия");
+
         InternationalParcel parcel = (InternationalParcel) Parcel.createFromMap(data);
 
-        Assertions.assertEquals(recipientName, parcel.recipientName);
-        Assertions.assertEquals(Double.parseDouble(weight), parcel.weight);
-        Assertions.assertEquals(Integer.parseInt(trackingNumber), parcel.trackingNumber);
-        Assertions.assertEquals(destinationCountry, parcel.getDestinationCountry());
+        Assertions.assertEquals("user1", parcel.recipientName);
+        Assertions.assertEquals(12.5, parcel.weight);
+        Assertions.assertEquals(5323, parcel.trackingNumber);
+        Assertions.assertEquals("Англия", parcel.getDestinationCountry());
+    }
+
+    @Test
+    void when_CreateParcelWithInvalidType_then_ThrowException() {
+        data.put("type", "UNKNOWN_TYPE");
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            Parcel.createFromMap(data);
+        });
     }
 }
