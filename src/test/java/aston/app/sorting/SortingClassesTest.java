@@ -48,7 +48,7 @@ public class SortingClassesTest {
 
     @Test
     public void testQuickSortByWeight() {
-        SortingClasses.quickSort(list, ParcelComparators.byWeight());
+        SortingClasses.sort("quickSort", list, ParcelComparators.byWeight());
 
         Assertions.assertEquals(parcel3, list.get(0));
         Assertions.assertEquals(parcel2, list.get(1));
@@ -58,7 +58,7 @@ public class SortingClassesTest {
 
     @Test
     public void testMergeSortByWeight() {
-        SortingClasses.mergeSort(list, ParcelComparators.byWeight());
+        SortingClasses.sort("mergeSort", list, ParcelComparators.byWeight());
 
         Assertions.assertEquals(parcel3, list.get(0));
         Assertions.assertEquals(parcel2, list.get(1));
@@ -68,7 +68,7 @@ public class SortingClassesTest {
 
     @Test
     public void testQuickSortNaturalOrder() {
-        SortingClasses.quickSort(list, Comparator.naturalOrder());
+        SortingClasses.sort("quickSort", list, Comparator.naturalOrder());
 
         Assertions.assertEquals(parcel3, list.get(0));
         Assertions.assertEquals(parcel2, list.get(1));
@@ -78,7 +78,7 @@ public class SortingClassesTest {
 
     @Test
     public void testMergeSortNaturalOrder() {
-        SortingClasses.mergeSort(list, Comparator.naturalOrder());
+        SortingClasses.sort("mergeSort", list, Comparator.naturalOrder());
 
         Assertions.assertEquals(parcel3, list.get(0));
         Assertions.assertEquals(parcel2, list.get(1));

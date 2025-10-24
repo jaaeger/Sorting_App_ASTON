@@ -27,7 +27,7 @@ public final class SortingClasses {
         };
     }
 
-
-    private SortingClasses() {}
+    private SortingClasses() {
+    }
 }
 

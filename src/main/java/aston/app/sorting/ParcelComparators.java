@@ -29,5 +29,6 @@ public final class ParcelComparators {
         return Comparator.comparing(Parcel::getTrackingNumber).reversed();
     }
 
-    private ParcelComparators() {}
+    private ParcelComparators() {
+    }
 }
