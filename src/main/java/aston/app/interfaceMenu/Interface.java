@@ -86,7 +86,7 @@ public class Interface {
 
     private static void readFromFile(int[] data) throws IOException {
         System.out.print("Введите путь к файлу: ");
-        scanner.nextLine(); // сброс буфера после nextInt()
+        scanner.nextLine();
         String filePath = scanner.nextLine();
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line;
