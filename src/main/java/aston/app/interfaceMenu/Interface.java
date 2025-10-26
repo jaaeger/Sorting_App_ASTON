@@ -1,7 +1,8 @@
 package aston.app.interfaceMenu;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Scanner;
-import java.io.*;
+import java.io.IOException;//убрать *
 import java.util.Arrays;
 import java.util.Random;
 
