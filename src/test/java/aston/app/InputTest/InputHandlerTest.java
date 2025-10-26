@@ -4,6 +4,7 @@ import aston.app.entity.Parcel;
 import aston.app.input.NameField;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
@@ -21,7 +22,7 @@ class InputHandlerTest {
     }
 
     @Test
-    void testFillManually_OneParcel() {
+    void whenFillManuallyWithOneValidParcel_thenOneParcelCreated() {
         String input = "1\nSTANDARD\nJohn Doe\n10.0\n12345\n20\n2025-11-01\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         scanner = new Scanner(System.in);
@@ -33,7 +34,7 @@ class InputHandlerTest {
     }
 
     @Test
-    void testFillFromFile_ValidFile() throws IOException {
+    void whenFillFromFileWithValidContent_thenOneParcelCreated() throws IOException {
         String fileContent = "COUNTRIES:USA,France\nSTANDARD,John Doe,5.0,12345,10";
         java.nio.file.Files.writeString(java.nio.file.Paths.get("testfile.txt"), fileContent);
 
@@ -46,7 +47,7 @@ class InputHandlerTest {
     }
 
     @Test
-    void testFillRandomly_OneParcel() {
+    void whenFillRandomlyWithOneParcel_thenOneParcelCreated() {
         List<Parcel> parcels = InputHandler.fillRandomly(new Scanner("1\n"));
 
         assertEquals(1, parcels.size());
@@ -54,7 +55,7 @@ class InputHandlerTest {
     }
 
     @Test
-    void testReadParcelCount_ValidNumber() {
+    void whenReadParcelCountWithValidNumber_thenReturnsTwo() {
         String input = "2\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         scanner = new Scanner(System.in);
@@ -65,7 +66,7 @@ class InputHandlerTest {
     }
 
     @Test
-    void testReadValidType_Standard() {
+    void whenReadValidTypeWithStandard_thenReturnsStandard() {
         String input = "STANDARD\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         scanner = new Scanner(System.in);
