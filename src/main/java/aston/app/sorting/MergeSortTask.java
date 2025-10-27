@@ -1,22 +1,18 @@
 package aston.app.sorting;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.RecursiveAction;
 
+@RequiredArgsConstructor
 public class MergeSortTask<T> extends RecursiveAction {
     private final List<T> list;
     private final Comparator<T> comparator;
     private final int left;
     private final int right;
-
-    public MergeSortTask(List<T> list, Comparator<T> comparator, int left, int right) {
-        this.list = list;
-        this.comparator = comparator;
-        this.left = left;
-        this.right = right;
-    }
 
     @Override
     protected void compute() {

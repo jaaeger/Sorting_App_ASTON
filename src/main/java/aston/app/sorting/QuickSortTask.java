@@ -1,22 +1,18 @@
 package aston.app.sorting;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.RecursiveAction;
 
+@RequiredArgsConstructor
 public class QuickSortTask<T> extends RecursiveAction {
     private final List<T> list;
     private final Comparator<T> comparator;
     private final int low;
     private final int high;
-
-    public QuickSortTask(List<T> list, Comparator<T> comparator, int low, int high) {
-        this.list = list;
-        this.comparator = comparator;
-        this.low = low;
-        this.high = high;
-    }
 
     @Override
     protected void compute() {
