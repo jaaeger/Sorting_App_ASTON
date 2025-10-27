@@ -1,4 +1,4 @@
-package aston.input;
+package aston.app.input;
 
 import aston.app.entity.Parcel;
 import aston.app.validation.Validator;
