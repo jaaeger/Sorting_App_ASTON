@@ -1,6 +1,7 @@
 package aston.app.ValidatorTest;
 
 import aston.app.input.NameField;
+import aston.app.validation.Validator;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -10,70 +11,67 @@ import static org.junit.jupiter.api.Assertions.*;
 class ValidatorTest {
 
     @Test
-    void whenCheckRecipientNameWithValidName_thenReturnsTrue() {
-        boolean result = Validator.check(NameField.RECIPIENT_NAME, "John Doe");
-        assertTrue(result);
+    void whenCheckRecipientNameWithNonEmpty_thenReturnsTrue() {
+        assertTrue(Validator.check(NameField.RECIPIENT_NAME, "John Doe"));
     }
 
     @Test
-    void whenCheckWeightWithValidValue_thenReturnsTrue() {
-        boolean result = Validator.check(NameField.WEIGHT, "10.5");
-        assertTrue(result);
+    void whenCheckRecipientNameEmpty_thenReturnsFalse() {
+        assertFalse(Validator.check(NameField.RECIPIENT_NAME, "   "));
     }
 
     @Test
-    void whenCheckWeightWithNegativeValue_thenReturnsFalse() {
-        boolean result = Validator.check(NameField.WEIGHT, "-5.0");
-        assertFalse(result);
+    void whenCheckWeightValidNumber_thenReturnsTrue() {
+        assertTrue(Validator.check(NameField.WEIGHT, "10.5"));
     }
 
     @Test
-    void whenCheckTrackingNumberWithValidValue_thenReturnsTrue() {
-        boolean result = Validator.check(NameField.TRACKING_NUMBER, "12345");
-        assertTrue(result);
+    void whenCheckWeightNegative_thenReturnsFalse() {
+        assertFalse(Validator.check(NameField.WEIGHT, "-2.5"));
     }
 
     @Test
-    void whenCheckTrackingNumberWithNegativeValue_thenReturnsFalse() {
-        boolean result = Validator.check(NameField.TRACKING_NUMBER, "-123");
-        assertFalse(result);
+    void whenCheckWeightNotNumber_thenReturnsFalse() {
+        assertFalse(Validator.check(NameField.WEIGHT, "abc"));
     }
 
     @Test
-    void whenCheckMaxDimensionWithValidValue_thenReturnsTrue() {
-        boolean result = Validator.check(NameField.MAX_DIMENSION, "25");
-        assertTrue(result);
+    void whenCheckTrackingNumberValid_thenReturnsTrue() {
+        assertTrue(Validator.check(NameField.TRACKING_NUMBER, "123"));
     }
 
     @Test
-    void whenCheckMaxDimensionWithNegativeValue_thenReturnsFalse() {
-        boolean result = Validator.check(NameField.MAX_DIMENSION, "-10");
-        assertFalse(result);
+    void whenCheckTrackingNumberInvalidString_thenReturnsFalse() {
+        assertFalse(Validator.check(NameField.TRACKING_NUMBER, "x5"));
     }
 
     @Test
-    void whenCheckDeliveryDeadlineWithFutureDate_thenReturnsTrue() {
-        String futureDate = LocalDate.now().plusDays(1).toString();
-        boolean result = Validator.check(NameField.DELIVERY_DEADLINE, futureDate);
-        assertTrue(result);
+    void whenCheckMaxDimensionZero_thenReturnsFalse() {
+        assertFalse(Validator.check(NameField.MAX_DIMENSION, "0"));
     }
 
     @Test
-    void whenCheckDeliveryDeadlineWithPastDate_thenReturnsFalse() {
-        String pastDate = LocalDate.now().minusDays(1).toString();
-        boolean result = Validator.check(NameField.DELIVERY_DEADLINE, pastDate);
-        assertFalse(result);
+    void whenCheckDeliveryDeadlineFuture_thenReturnsTrue() {
+        assertTrue(Validator.check(NameField.DELIVERY_DEADLINE, LocalDate.now().plusDays(1).toString()));
     }
 
     @Test
-    void whenCheckDestinationCountryWithValidCountry_thenReturnsTrue() {
-        boolean result = Validator.check(NameField.DESTINATION_COUNTRY, "USA");
-        assertTrue(result);
+    void whenCheckDeliveryDeadlineIncorrectFormat_thenReturnsFalse() {
+        assertFalse(Validator.check(NameField.DELIVERY_DEADLINE, "2025/10/10"));
     }
 
     @Test
-    void whenCheckDestinationCountryWithInvalidCountry_thenReturnsFalse() {
-        boolean result = Validator.check(NameField.DESTINATION_COUNTRY, "Mars");
-        assertFalse(result);
+    void whenCheckDeliveryDeadlineToday_thenReturnsFalse() {
+        assertFalse(Validator.check(NameField.DELIVERY_DEADLINE, LocalDate.now().toString()));
+    }
+
+    @Test
+    void whenCheckDestinationCountryUpperCase_thenReturnsTrue() {
+        assertTrue(Validator.check(NameField.DESTINATION_COUNTRY, "USA"));
+    }
+
+    @Test
+    void whenCheckDestinationCountryUnknown_thenReturnsFalse() {
+        assertFalse(Validator.check(NameField.DESTINATION_COUNTRY, "Mars"));
     }
 }
