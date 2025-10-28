@@ -5,6 +5,7 @@ import aston.app.core.sorting.SortingClasses;
 import aston.app.entity.Parcel;
 import aston.app.entity.StandardParcel;
 import aston.app.input.model.NameField;
+import aston.app.output.WriterFile;
 import aston.app.ui.ConsoleContext;
 
 import java.nio.file.Files;
@@ -131,22 +132,8 @@ public class SortAction implements MenuAction {
                     " по полю " + field.getNameField() +
                     " класса " + field.getNameClass() + ".");
 
-            System.out.print("Сохранить отсортированный список в файл? (y/n): ");
-            String save = ctx.in().nextLine().trim();
-            if ("y".equalsIgnoreCase(save)) {
-                System.out.print("Название отчета: ");
-                String name = ctx.in().nextLine().trim();
-                try {
-                    Path outputDir = Path.of("output");
-                    Files.createDirectories(outputDir);
-                    Path filePath = outputDir.resolve(name + ".txt");
-                    String content = ctx.parcels().stream().map(Object::toString).collect(Collectors.joining("\n")) + "\n";
-                    Files.writeString(filePath, content, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-                    System.out.println("Сохранено в " + filePath.toAbsolutePath());
-                } catch (Exception e) {
-                    System.out.println("Ошибка сохранения: " + e.getMessage());
-                }
-            }
+            String content = ctx.parcels().stream().map(Object::toString).collect(Collectors.joining("\n")) + "\n";
+            WriterFile.writeFile(ctx, "Сохранить отсортированный список в файл? (y/n): ", content);
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка сортировки: " + e.getMessage());
         }

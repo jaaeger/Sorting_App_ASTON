@@ -7,6 +7,7 @@ import aston.app.entity.ExpressParcel;
 import aston.app.entity.InternationalParcel;
 import aston.app.entity.Parcel;
 import aston.app.entity.StandardParcel;
+import aston.app.output.WriterFile;
 import aston.app.ui.ConsoleContext;
 
 import java.nio.file.Files;
@@ -148,22 +149,9 @@ public class SearchAction implements MenuAction {
             System.out.println("Посылка не найдена.");
         } else {
             System.out.println("Найдено: " + list.get(index));
-            System.out.print("Сохранить найденный элемент в файл? (y/n): ");
-            String save = ctx.in().nextLine().trim();
-            if ("y".equalsIgnoreCase(save)) {
-                System.out.print("Название отчета: ");
-                String name = ctx.in().nextLine().trim();
-                try {
-                    Path outputDir = Path.of("output");
-                    Files.createDirectories(outputDir);
-                    Path filePath = outputDir.resolve(name + ".txt");
-                    String content = list.get(index).toString() + "\n";
-                    Files.writeString(filePath, content, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-                    System.out.println("Сохранено в " + filePath.toAbsolutePath());
-                } catch (Exception e) {
-                    System.out.println("Ошибка сохранения: " + e.getMessage());
-                }
-            }
+
+            String content = list.get(index).toString() + "\n";
+            WriterFile.writeFile(ctx, "Сохранить найденный элемент в файл? (y/n): ", content);
         }
     }
 }
