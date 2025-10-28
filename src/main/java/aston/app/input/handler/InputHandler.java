@@ -34,7 +34,7 @@ public class InputHandler {
         List<Parcel> parcels = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-            System.out.printf("Посылка %d из %d (или введите 'n' для завершения):%n", i + 1, count);
+            System.out.printf("Посылка %d из %d%n", i + 1, count);
             NameClass type = readValidType(sc);
             if (type == null) {
                 break;
@@ -188,9 +188,8 @@ public class InputHandler {
 
     private static NameClass readValidType(Scanner sc) {
         for (int i = 0; i < 5; i++) {
-            System.out.print("Введите тип посылки (STANDARD/EXPRESS/INTERNATIONAL) или 'n' для завершения: ");
-            String raw = sc.nextLine().trim();
-            if (raw.equalsIgnoreCase("n")) {
+            String raw = getNameTypeParcel(sc);
+            if (raw.equalsIgnoreCase("exit")) {
                 return null;
             }
             NameClass type = parseType(raw);
@@ -200,6 +199,35 @@ public class InputHandler {
             System.out.println("Недопустимый тип посылки. Допустимые типы: " + VALID_TYPES);
         }
         return null;
+    }
+
+    private static String getNameTypeParcel(Scanner sc) {
+        while(true) {
+            System.out.println("""
+                == Тип посылки ==
+                1) Standard
+                2) Express
+                3) International
+                4) Выход""");
+            System.out.print("Ваш выбор: ");
+            String nameType = sc.nextLine().trim();
+
+            switch (nameType) {
+                case "1" -> {
+                    return "standard";
+                }
+                case "2" -> {
+                    return "express";
+                }
+                case "3" -> {
+                    return "international";
+                }
+                case "4" -> {
+                    return "exit";
+                }
+                default -> System.out.println("Неизвестный пункт");
+            }
+        }
     }
 
     private static NameClass parseType(String raw) {
@@ -222,25 +250,21 @@ public class InputHandler {
     }
 
     private static String generateRandomValue(NameField field) {
-        switch (field) {
-            case RECIPIENT_NAME:
-                return SAMPLE_NAMES.get(RANDOM.nextInt(SAMPLE_NAMES.size()));
-            case WEIGHT:
-                return String.format(Locale.ROOT, "%.1f", 0.1 + RANDOM.nextDouble() * 99.9);
-            case TRACKING_NUMBER:
-                return String.valueOf(1 + RANDOM.nextInt(999_999));
-            case MAX_DIMENSION:
-                return String.valueOf(1 + RANDOM.nextInt(100));
-            case DELIVERY_DEADLINE:
+        return switch (field) {
+            case RECIPIENT_NAME -> SAMPLE_NAMES.get(RANDOM.nextInt(SAMPLE_NAMES.size()));
+            case WEIGHT -> String.format(Locale.ROOT, "%.1f", 0.1 + RANDOM.nextDouble() * 99.9);
+            case TRACKING_NUMBER -> String.valueOf(1 + RANDOM.nextInt(999_999));
+            case MAX_DIMENSION -> String.valueOf(1 + RANDOM.nextInt(100));
+            case DELIVERY_DEADLINE -> {
                 LocalDate today = LocalDate.now();
-                return today.plusDays(1 + RANDOM.nextInt(365)).toString();
-            case DESTINATION_COUNTRY:
+                yield today.plusDays(1 + RANDOM.nextInt(365)).toString();
+            }
+            case DESTINATION_COUNTRY -> {
                 if (SAMPLE_COUNTRIES.isEmpty()) {
-                    return "USA";
+                    yield "USA";
                 }
-                return SAMPLE_COUNTRIES.get(RANDOM.nextInt(SAMPLE_COUNTRIES.size()));
-            default:
-                return "Unknown";
-        }
+                yield SAMPLE_COUNTRIES.get(RANDOM.nextInt(SAMPLE_COUNTRIES.size()));
+            }
+        };
     }
 }
