@@ -59,7 +59,7 @@ public final class SortingClasses {
             throw new IllegalArgumentException("Функция извлечения поля не может быть null");
         }
 
-        Map<Integer, T> map = new HashMap<>();
+        List<T> listValue = new ArrayList<>();
         List<Integer> indexList = new ArrayList<>();
 
         for (int i = 0; i < list.size(); i++) {
@@ -72,21 +72,18 @@ public final class SortingClasses {
 
             if (fieldValue % 2 == 0) {
                 indexList.add(i);
-                map.put(i, t);
+                listValue.add(t);
             }
         }
 
-        if (map.isEmpty()) {
+        if (listValue.isEmpty()) {
             throw new IllegalArgumentException("В списке отсутствуют четные значения");
         }
 
-        List<Map.Entry<Integer, T>> sortedMap = sortMapByValue(type, map, comparator);
+        sortList(type, listValue, comparator);
 
-        System.out.println(sortedMap);
-
-        for (int i = 0; i < sortedMap.size(); i++) {
-            Map.Entry<Integer, T> element = sortedMap.get(i);
-            list.set(indexList.get(i), element.getValue());
+        for (int i = 0; i < listValue.size(); i++) {
+            list.set(indexList.get(i), listValue.get(i));
         }
     }
 
