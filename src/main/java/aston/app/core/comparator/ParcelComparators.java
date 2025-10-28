@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.util.Comparator;
 
 public final class ParcelComparators {
-
     public static Comparator<? super Parcel> byRecipientName() {
         return Comparator.comparing(
                 Parcel::getRecipientName,
@@ -24,7 +23,6 @@ public final class ParcelComparators {
     public static Comparator<? super Parcel> byTrackingNumber() {
         return Comparator.comparingInt(Parcel::getTrackingNumber);
     }
-
 
     public static Comparator<? super Parcel> byMaxDimension() {
         return Comparator.comparing(

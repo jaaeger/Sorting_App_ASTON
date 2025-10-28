@@ -1,5 +1,6 @@
 package aston.app.entity;
 
+import aston.app.input.model.NameField;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -7,7 +8,6 @@ import lombok.ToString;
 import java.util.Map;
 
 @Getter
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class StandardParcel extends Parcel {
     private final int maxDimension;
@@ -48,5 +48,11 @@ public class StandardParcel extends Parcel {
                 .trackingNumber(Integer.parseInt(data.get("trackingNumber")))
                 .maxDimension(Integer.parseInt(data.get("maxDimension")))
                 .build();
+    }
+
+    public String toString() {
+        return "Стандартная посылка {\n" +
+                super.toString() +
+                "\t" +NameField.MAX_DIMENSION.getDescription() + " = " + this.getMaxDimension() + "\n}";
     }
 }

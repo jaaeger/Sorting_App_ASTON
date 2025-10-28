@@ -25,13 +25,11 @@ public class App {
         list.add(new StandardParcel("Галина", 4.1, 5, 75));
         list.add(new InternationalParcel("Дмитрий", 0.9, 500, "DE"));
 
-
         Map<NameField, Comparator<? super Parcel>> comparators = new EnumMap<>(NameField.class);
 
         comparators.put(NameField.RECIPIENT_NAME, ParcelComparators.byRecipientName());
         comparators.put(NameField.WEIGHT, ParcelComparators.byWeight());
         comparators.put(NameField.TRACKING_NUMBER, ParcelComparators.byTrackingNumber());
-
 
         comparators.put(NameField.MAX_DIMENSION, ParcelComparators.byMaxDimension());
         comparators.put(NameField.DESTINATION_COUNTRY, ParcelComparators.byDestinationCountry());

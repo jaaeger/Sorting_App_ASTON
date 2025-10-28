@@ -1,5 +1,6 @@
 package aston.app.entity;
 
+import aston.app.input.model.NameField;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -7,7 +8,6 @@ import lombok.ToString;
 import java.util.Map;
 
 @Getter
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class InternationalParcel extends Parcel {
     private final String destinationCountry;
@@ -47,5 +47,11 @@ public class InternationalParcel extends Parcel {
                 .trackingNumber(Integer.parseInt(data.get("trackingNumber")))
                 .destinationCountry(data.get("destinationCountry"))
                 .build();
+    }
+
+    public String toString() {
+        return "Международная посылка {\n" +
+                super.toString() +
+                "\t" + NameField.DESTINATION_COUNTRY.getDescription() + " = " + this.getDestinationCountry() + "\n}";
     }
 }

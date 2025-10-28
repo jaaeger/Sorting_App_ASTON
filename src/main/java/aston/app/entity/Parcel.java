@@ -1,15 +1,14 @@
 package aston.app.entity;
 
 import aston.app.input.model.NameClass;
+import aston.app.input.model.NameField;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.Map;
 import java.util.function.Function;
 
 @Getter
-@ToString
 @EqualsAndHashCode
 public abstract class Parcel implements Comparable<Parcel> {
     protected final String recipientName;
@@ -70,5 +69,11 @@ public abstract class Parcel implements Comparable<Parcel> {
         }
 
         return Integer.compare(this.trackingNumber, v.trackingNumber);
+    }
+
+    public String toString() {
+        return  "\t" +NameField.RECIPIENT_NAME.getDescription() + " = " + this.getRecipientName() + "\n" +
+                "\t" +NameField.WEIGHT.getDescription() + " = " + this.getWeight() + "\n" +
+                "\t" +NameField.TRACKING_NUMBER.getDescription() + " = " + this.getTrackingNumber() + "\n";
     }
 }

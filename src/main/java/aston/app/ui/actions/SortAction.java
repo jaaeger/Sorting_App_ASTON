@@ -50,13 +50,14 @@ public class SortAction implements MenuAction {
         Map<NameField, Comparator<? super Parcel>> m = ctx.comparators();
         Comparator<? super Parcel> cmp = m.get(field);
         if (cmp == null) {
-            System.out.println("Для поля " + field + " компаратор не зарегистрирован.");
+            System.out.println("Для поля " + field.getNameField() + " компаратор не зарегистрирован.");
             return;
         }
 
         try {
             SortingClasses.sortList(algo, ctx.parcels(), cmp);
-            System.out.println("Отсортировано алгоритмом " + algo + " по полю " + field + ".");
+            System.out.println("Отсортировано алгоритмом " + algo + " по полю " + field.getNameField() +
+                    " класса " + field.getNameClass() + ".");
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка сортировки: " + e.getMessage());
         }

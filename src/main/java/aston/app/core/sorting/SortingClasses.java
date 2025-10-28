@@ -13,12 +13,7 @@ public final class SortingClasses {
     private static final int POOL_SIZE = 4;
 
     public static <T> void sortList(String type, List<T> list, Comparator<? super T> comparator) {
-
         validateSortingParameters(type, list, comparator);
-
-        if (list.isEmpty()) {
-            return;
-        }
 
         ForkJoinTask<Void> task = getTask(type, list, comparator);
 
@@ -64,10 +59,6 @@ public final class SortingClasses {
             throw new IllegalArgumentException("Функция извлечения поля не может быть null");
         }
 
-        if (list.isEmpty()) {
-            return;
-        }
-
         Map<Integer, T> map = new HashMap<>();
         List<Integer> indexList = new ArrayList<>();
 
@@ -86,7 +77,7 @@ public final class SortingClasses {
         }
 
         if (map.isEmpty()) {
-            return;
+            throw new IllegalArgumentException("В списке отсутствуют четные значения");
         }
 
         List<Map.Entry<Integer, T>> sortedMap = sortMapByValue(type, map, comparator);
@@ -102,25 +93,33 @@ public final class SortingClasses {
     }
 
     private static <T> void validateSortingParameters(String type, List<T> list, Comparator<? super T> comparator) {
-        if (type == null || type.trim().isEmpty()) {
-            throw new IllegalArgumentException("Тип алгоритма не может быть null или пустым");
-        }
+        validateParameters(type, comparator == null);
         if (list == null) {
             throw new IllegalArgumentException("Список не может быть null");
         }
-        if (comparator == null) {
-            throw new IllegalArgumentException("Компаратор не может быть null");
+        if (list.isEmpty()) {
+            throw new IllegalArgumentException("Список не может быть пустой");
         }
     }
 
     private static <K, V> void validateMapParameters(String type, Map<K, V> map, Comparator<?> comparator) {
-        if (type == null || type.trim().isEmpty()) {
-            throw new IllegalArgumentException("Тип алгоритма не может быть null или пустым");
-        }
+        validateParameters(type, comparator == null);
         if (map == null) {
             throw new IllegalArgumentException("Карта не может быть null");
         }
-        if (comparator == null) {
+        if (map.isEmpty()) {
+            throw new IllegalArgumentException("Карта не может быть пустой");
+        }
+    }
+
+    private static <T> void validateParameters(String type, boolean comparator) {
+        if (type == null) {
+            throw new IllegalArgumentException("Тип алгоритма не может быть null");
+        }
+        if (type.trim().isEmpty()) {
+            throw new IllegalArgumentException("Тип алгоритма не может быть пустым");
+        }
+        if (comparator) {
             throw new IllegalArgumentException("Компаратор не может быть null");
         }
     }

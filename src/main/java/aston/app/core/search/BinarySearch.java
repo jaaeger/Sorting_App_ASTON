@@ -10,11 +10,12 @@ import java.util.List;
 import java.util.function.Function;
 
 public final class BinarySearch {
-
     public static <T, K extends Comparable<? super K>> int search(List<T> list, K key, Function<T, K> keyExtractor) {
-
         if (list == null) {
             throw new IllegalArgumentException("Список не может быть null");
+        }
+        if (list.isEmpty()) {
+            throw new IllegalArgumentException("Список не может быть пустым");
         }
         if (keyExtractor == null) {
             throw new IllegalArgumentException("Извлекатель ключа (keyExtractor) не может быть null");
@@ -68,4 +69,6 @@ public final class BinarySearch {
     public static int searchExpressByDeadline(List<ExpressParcel> list, LocalDate deadline) {
         return search(list, deadline, ExpressParcel::getDeliveryDeadline);
     }
+
+    private BinarySearch() {}
 }

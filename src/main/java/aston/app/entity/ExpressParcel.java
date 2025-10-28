@@ -1,14 +1,13 @@
 package aston.app.entity;
 
+import aston.app.input.model.NameField;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.Map;
 
 @Getter
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class ExpressParcel extends Parcel {
     private final LocalDate deliveryDeadline;
@@ -49,5 +48,11 @@ public class ExpressParcel extends Parcel {
                 .trackingNumber(Integer.parseInt(data.get("trackingNumber")))
                 .deliveryDeadline(LocalDate.parse(data.get("deliveryDeadline")))
                 .build();
+    }
+
+    public String toString() {
+        return "Экспресс посылка {\n" +
+                super.toString() +
+                "\t" +NameField.DELIVERY_DEADLINE.getDescription() + " = " + this.getDeliveryDeadline() + "\n}";
     }
 }
