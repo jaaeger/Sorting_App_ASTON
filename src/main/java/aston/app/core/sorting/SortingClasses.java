@@ -67,7 +67,7 @@ public final class SortingClasses {
             Integer fieldValue = getField.apply(t);
 
             if (fieldValue == null) {
-                throw new IllegalArgumentException("Значение поля не может быть null для элемента: " + t);
+                continue;
             }
 
             if (fieldValue % 2 == 0) {
@@ -82,13 +82,11 @@ public final class SortingClasses {
 
         List<Map.Entry<Integer, T>> sortedMap = sortMapByValue(type, map, comparator);
 
-        int j = 0;
+        System.out.println(sortedMap);
+
         for (int i = 0; i < sortedMap.size(); i++) {
-            if (indexList.get(j) == i) {
-                Map.Entry<Integer, T> element = sortedMap.get(i);
-                list.set(i, element.getValue());
-                j++;
-            }
+            Map.Entry<Integer, T> element = sortedMap.get(i);
+            list.set(indexList.get(i), element.getValue());
         }
     }
 
