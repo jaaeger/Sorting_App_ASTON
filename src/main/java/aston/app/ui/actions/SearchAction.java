@@ -9,6 +9,9 @@ import aston.app.entity.Parcel;
 import aston.app.entity.StandardParcel;
 import aston.app.ui.ConsoleContext;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +61,7 @@ public class SearchAction implements MenuAction {
         SortingClasses.sortList("mergeSort", sorted, ParcelComparators.byRecipientName());
 
         int index = BinarySearch.searchByRecipient(sorted, name);
-        showResult(sorted, index);
+        showResult(ctx, sorted, index);
     }
 
     private void searchByWeight(ConsoleContext ctx) {
@@ -69,7 +72,7 @@ public class SearchAction implements MenuAction {
             SortingClasses.sortList("mergeSort", sorted, ParcelComparators.byWeight());
 
             int index = BinarySearch.searchByWeight(sorted, weight);
-            showResult(sorted, index);
+            showResult(ctx, sorted, index);
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат веса.");
         }
@@ -83,7 +86,7 @@ public class SearchAction implements MenuAction {
             SortingClasses.sortList("mergeSort", sorted, ParcelComparators.byTrackingNumber());
 
             int index = BinarySearch.searchByTrackingNumber(sorted, number);
-            showResult(sorted, index);
+            showResult(ctx, sorted, index);
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат числа.");
         }
@@ -101,7 +104,7 @@ public class SearchAction implements MenuAction {
             SortingClasses.sortList("mergeSort", list, ParcelComparators.byMaxDimension());
 
             int index = BinarySearch.searchStandardByMaxDimension(list, dimension);
-            showResult(list, index);
+            showResult(ctx, list, index);
         } catch (NumberFormatException e) {
             System.out.println("Неверный формат числа.");
         }
@@ -119,7 +122,7 @@ public class SearchAction implements MenuAction {
         SortingClasses.sortList("mergeSort", list, ParcelComparators.byDestinationCountry());
 
         int index = BinarySearch.searchInternationalByCountry(list, country);
-        showResult(list, index);
+        showResult(ctx, list, index);
     }
 
     private void searchByDeadline(ConsoleContext ctx) {
@@ -134,17 +137,33 @@ public class SearchAction implements MenuAction {
             SortingClasses.sortList("mergeSort", list, ParcelComparators.byDeliveryDeadline());
 
             int index = BinarySearch.searchExpressByDeadline(list, date);
-            showResult(list, index);
+            showResult(ctx, list, index);
         } catch (Exception e) {
             System.out.println("Неверный формат даты.");
         }
     }
 
-    private <T> void showResult(List<T> list, int index) {
+    private <T> void showResult(ConsoleContext ctx, List<T> list, int index) {
         if (index < 0) {
             System.out.println("Посылка не найдена.");
         } else {
             System.out.println("Найдено: " + list.get(index));
+            System.out.print("Сохранить найденный элемент в файл? (y/n): ");
+            String save = ctx.in().nextLine().trim();
+            if ("y".equalsIgnoreCase(save)) {
+                System.out.print("Название отчета: ");
+                String name = ctx.in().nextLine().trim();
+                try {
+                    Path outputDir = Path.of("output");
+                    Files.createDirectories(outputDir);
+                    Path filePath = outputDir.resolve(name + ".txt");
+                    String content = list.get(index).toString() + "\n";
+                    Files.writeString(filePath, content, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                    System.out.println("Сохранено в " + filePath.toAbsolutePath());
+                } catch (Exception e) {
+                    System.out.println("Ошибка сохранения: " + e.getMessage());
+                }
+            }
         }
     }
 }

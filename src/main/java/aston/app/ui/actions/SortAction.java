@@ -7,10 +7,14 @@ import aston.app.entity.StandardParcel;
 import aston.app.input.model.NameField;
 import aston.app.ui.ConsoleContext;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class SortAction implements MenuAction {
     @Override
@@ -126,6 +130,23 @@ public class SortAction implements MenuAction {
                     (evenOnly ? " (только чётные по выбранному полю)" : "") +
                     " по полю " + field.getNameField() +
                     " класса " + field.getNameClass() + ".");
+
+            System.out.print("Сохранить отсортированный список в файл? (y/n): ");
+            String save = ctx.in().nextLine().trim();
+            if ("y".equalsIgnoreCase(save)) {
+                System.out.print("Название отчета: ");
+                String name = ctx.in().nextLine().trim();
+                try {
+                    Path outputDir = Path.of("output");
+                    Files.createDirectories(outputDir);
+                    Path filePath = outputDir.resolve(name + ".txt");
+                    String content = ctx.parcels().stream().map(Object::toString).collect(Collectors.joining("\n")) + "\n";
+                    Files.writeString(filePath, content, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                    System.out.println("Сохранено в " + filePath.toAbsolutePath());
+                } catch (Exception e) {
+                    System.out.println("Ошибка сохранения: " + e.getMessage());
+                }
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка сортировки: " + e.getMessage());
         }
