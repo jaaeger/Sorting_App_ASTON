@@ -3,9 +3,6 @@ package aston.app.ui.actions;
 import aston.app.input.model.NameField;
 import aston.app.ui.ConsoleContext;
 
-import java.util.Comparator;
-import java.util.Map;
-
 public class AppInfoAction implements MenuAction {
     @Override
     public String key() {
@@ -32,8 +29,7 @@ public class AppInfoAction implements MenuAction {
         }
 
         System.out.println("\nСортировка доступна по полям:");
-        for (Map.Entry<NameField, Comparator<? super aston.app.entity.Parcel>> e : ctx.comparators().entrySet()) {
-            NameField f = e.getKey();
+        for (NameField f : NameField.values()) {
             System.out.printf(" - %s (%s)%n", f.name(), f.getNameClass().name());
         }
 

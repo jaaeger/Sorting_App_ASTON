@@ -1,5 +1,6 @@
 package aston.app.ui.actions;
 
+import aston.app.core.comparator.ParcelComparators;
 import aston.app.core.search.BinarySearch;
 import aston.app.core.sorting.SortingClasses;
 import aston.app.entity.ExpressParcel;
@@ -10,7 +11,6 @@ import aston.app.ui.ConsoleContext;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,8 +55,7 @@ public class SearchAction implements MenuAction {
         String name = ctx.in().nextLine().trim();
 
         List<Parcel> sorted = new ArrayList<>(ctx.parcels());
-        SortingClasses.sortList("mergeSort", sorted,
-                Comparator.comparing(Parcel::getRecipientName, Comparator.nullsLast(String::compareToIgnoreCase)));
+        SortingClasses.sortList("mergeSort", sorted, ParcelComparators.byRecipientName());
 
         int index = BinarySearch.searchByRecipient(sorted, name);
         showResult(sorted, index);
@@ -67,7 +66,7 @@ public class SearchAction implements MenuAction {
         try {
             double weight = Double.parseDouble(ctx.in().nextLine().trim());
             List<Parcel> sorted = new ArrayList<>(ctx.parcels());
-            SortingClasses.sortList("mergeSort", sorted, Comparator.comparingDouble(Parcel::getWeight));
+            SortingClasses.sortList("mergeSort", sorted, ParcelComparators.byWeight());
 
             int index = BinarySearch.searchByWeight(sorted, weight);
             showResult(sorted, index);
@@ -81,7 +80,7 @@ public class SearchAction implements MenuAction {
         try {
             int number = Integer.parseInt(ctx.in().nextLine().trim());
             List<Parcel> sorted = new ArrayList<>(ctx.parcels());
-            SortingClasses.sortList("mergeSort", sorted, Comparator.comparingInt(Parcel::getTrackingNumber));
+            SortingClasses.sortList("mergeSort", sorted, ParcelComparators.byTrackingNumber());
 
             int index = BinarySearch.searchByTrackingNumber(sorted, number);
             showResult(sorted, index);
@@ -99,7 +98,7 @@ public class SearchAction implements MenuAction {
                     .map(p -> (StandardParcel) p)
                     .collect(Collectors.toCollection(ArrayList::new));
 
-            SortingClasses.sortList("mergeSort", list, Comparator.comparing(StandardParcel::getMaxDimension));
+            SortingClasses.sortList("mergeSort", list, ParcelComparators.byMaxDimension());
 
             int index = BinarySearch.searchStandardByMaxDimension(list, dimension);
             showResult(list, index);
@@ -117,8 +116,7 @@ public class SearchAction implements MenuAction {
                 .map(p -> (InternationalParcel) p)
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        SortingClasses.sortList("mergeSort", list, Comparator.comparing
-                (InternationalParcel::getDestinationCountry, Comparator.nullsLast(String::compareToIgnoreCase)));
+        SortingClasses.sortList("mergeSort", list, ParcelComparators.byDestinationCountry());
 
         int index = BinarySearch.searchInternationalByCountry(list, country);
         showResult(list, index);
@@ -133,7 +131,7 @@ public class SearchAction implements MenuAction {
                     .map(p -> (ExpressParcel) p)
                     .collect(Collectors.toCollection(ArrayList::new));
 
-            SortingClasses.sortList("mergeSort", list, Comparator.comparing(ExpressParcel::getDeliveryDeadline));
+            SortingClasses.sortList("mergeSort", list, ParcelComparators.byDeliveryDeadline());
 
             int index = BinarySearch.searchExpressByDeadline(list, date);
             showResult(list, index);

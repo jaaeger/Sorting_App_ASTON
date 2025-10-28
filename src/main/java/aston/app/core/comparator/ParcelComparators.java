@@ -4,11 +4,17 @@ import aston.app.entity.ExpressParcel;
 import aston.app.entity.InternationalParcel;
 import aston.app.entity.Parcel;
 import aston.app.entity.StandardParcel;
+import aston.app.input.model.NameField;
 
 import java.time.LocalDate;
 import java.util.Comparator;
 
 public final class ParcelComparators {
+
+    public static Comparator<? super Parcel> byNatural() {
+        return Comparator.naturalOrder();
+    }
+
     public static Comparator<? super Parcel> byRecipientName() {
         return Comparator.comparing(
                 Parcel::getRecipientName,
@@ -45,6 +51,17 @@ public final class ParcelComparators {
         );
     }
 
-    private ParcelComparators() {
+    public static Comparator<? super Parcel> byField(NameField field) {
+        return switch (field) {
+            case RECIPIENT_NAME -> byRecipientName();
+            case WEIGHT -> byWeight();
+            case TRACKING_NUMBER -> byTrackingNumber();
+            case MAX_DIMENSION -> byMaxDimension();
+            case DESTINATION_COUNTRY -> byDestinationCountry();
+            case DELIVERY_DEADLINE -> byDeliveryDeadline();
+        };
     }
-}
+
+    private ParcelComparators() {
+        }
+    }

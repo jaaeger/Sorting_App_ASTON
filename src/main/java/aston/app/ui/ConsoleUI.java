@@ -1,7 +1,6 @@
 package aston.app.ui;
 
 import aston.app.entity.Parcel;
-import aston.app.input.model.NameField;
 import aston.app.ui.actions.AppInfoAction;
 import aston.app.ui.actions.ExitAction;
 import aston.app.ui.actions.InputAction;
@@ -10,8 +9,6 @@ import aston.app.ui.actions.SearchAction;
 import aston.app.ui.actions.ShowInfoAction;
 import aston.app.ui.actions.SortAction;
 
-import java.util.Comparator;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,17 +18,13 @@ public class ConsoleUI {
 
     private final Scanner in;
     private final List<Parcel> parcels;
-    private final Map<NameField, Comparator<? super Parcel>> comparators;
     private final Map<String, MenuAction> actions = new LinkedHashMap<>();
     private boolean running = true;
 
     public ConsoleUI(Scanner in,
-                     List<Parcel> parcels,
-                     Map<NameField, Comparator<? super Parcel>> comparators) {
+                     List<Parcel> parcels) {
         this.in = in;
         this.parcels = parcels;
-        this.comparators = new EnumMap<>(NameField.class);
-        this.comparators.putAll(comparators);
         registerActions();
     }
 
@@ -57,7 +50,7 @@ public class ConsoleUI {
                 System.out.println("Неизвестная команда: " + choice);
                 continue;
             }
-            action.run(new ConsoleContext(in, parcels, comparators));
+            action.run(new ConsoleContext(in, parcels));
             System.out.println();
         }
     }
