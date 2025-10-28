@@ -1,7 +1,6 @@
-package aston.app.InputTest;
+package aston.app.input.handler;
 
 import aston.app.entity.Parcel;
-import aston.app.input.InputHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
