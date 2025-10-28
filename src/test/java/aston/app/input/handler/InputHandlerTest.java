@@ -16,7 +16,7 @@ class InputHandlerTest {
 
     @Test
     void whenFillManuallyValidInput_thenParcelCreated() {
-        String input = "1\nSTANDARD\nJohn Doe\n10.0\n12345\n20\n2025-11-01\nUSA\n";
+        String input = "1\n1\nJohn Doe\n10.0\n12345\n20\n2025-11-01\nUSA\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
         List<Parcel> parcels = InputHandler.fillManually(new Scanner(System.in));
