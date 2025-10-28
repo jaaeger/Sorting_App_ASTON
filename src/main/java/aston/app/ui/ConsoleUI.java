@@ -2,6 +2,7 @@ package aston.app.ui;
 
 import aston.app.entity.Parcel;
 import aston.app.ui.actions.AppInfoAction;
+import aston.app.ui.actions.CounterAction;
 import aston.app.ui.actions.ExitAction;
 import aston.app.ui.actions.InputAction;
 import aston.app.ui.actions.MenuAction;
@@ -9,14 +10,10 @@ import aston.app.ui.actions.SearchAction;
 import aston.app.ui.actions.ShowInfoAction;
 import aston.app.ui.actions.SortAction;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class ConsoleUI {
 
@@ -38,6 +35,7 @@ public class ConsoleUI {
         addAction(new InputAction());
         addAction(new SortAction());
         addAction(new SearchAction());
+        addAction(new CounterAction());
         addAction(new ExitAction(() -> running = false));
     }
 
