@@ -66,14 +66,4 @@ public class ConsoleUI {
         }
         System.out.print("Ваш выбор: ");
     }
-
-    private static void saveToFile(String path, List<Parcel> parcels) throws Exception {
-        String content = parcels.stream().map(Object::toString).collect(Collectors.joining("\n")) + "\n";
-        Files.writeString(Path.of(path), content, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-    }
-
-    private static void saveToFile(String path, Object item) throws Exception {
-        String content = item.toString() + "\n";
-        Files.writeString(Path.of(path), content, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-    }
 }

@@ -1,7 +1,6 @@
 package aston.app.core.sorting;
 
 import aston.app.core.comparator.ParcelComparators;
-import aston.app.core.sorting.SortingClasses;
 import aston.app.entity.Parcel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -134,6 +133,5 @@ public class SortingClassesTest {
             Assertions.assertThrows(IllegalArgumentException.class,
                     () -> SortingClasses.sortMapByValue("quickSort", null, ParcelComparators.byWeight()));
         }
-
     }
 }
