@@ -28,6 +28,8 @@ public class InputHandler {
     private static final Random RANDOM = new Random();
     private static final List<String> SAMPLE_NAMES = Arrays.asList("John Doe", "Jane Smith", "Alex Brown");
 
+    private static final int MAX_COUNT_PARCEL = 6;
+
     public static List<Parcel> fillManually(Scanner sc) {
         int count = readParcelCount(sc);
         System.out.println("Ввод данных вручную!");
@@ -67,6 +69,7 @@ public class InputHandler {
         List<Parcel> parcels = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            reader.mark(1000000);
             String firstLine = reader.readLine();
             if (firstLine != null && firstLine.trim().toUpperCase(Locale.ROOT).startsWith("COUNTRIES:")) {
                 String raw = firstLine.trim().substring("COUNTRIES:".length());
@@ -77,6 +80,8 @@ public class InputHandler {
                 SAMPLE_COUNTRIES.clear();
                 SAMPLE_COUNTRIES.addAll(countries);
                 System.out.println("Обновлённый список стран: " + SAMPLE_COUNTRIES);
+            } else {
+                reader.reset();
             }
 
             for (int i = 0; i < count; i++) {
@@ -141,7 +146,6 @@ public class InputHandler {
         return parcels;
     }
 
-
     public static List<Parcel> fillRandomly(Scanner sc) {
         int count = readParcelCount(sc);
         List<Parcel> parcels = new ArrayList<>();
@@ -171,14 +175,14 @@ public class InputHandler {
 
     public static int readParcelCount(Scanner sc) {
         for (int i = 0; i < 5; i++) {
-            System.out.print("Введите количество посылок (1–5): ");
+            System.out.printf("Введите количество посылок (1–%d): ", MAX_COUNT_PARCEL);
             String input = sc.nextLine().trim();
             try {
                 int count = Integer.parseInt(input);
-                if (count >= 1 && count <= 5) {
+                if (count >= 1 && count <= MAX_COUNT_PARCEL) {
                     return count;
                 }
-                System.out.println("Количество должно быть от 1 до 5.");
+                System.out.printf("Количество должно быть от 1 до %d.\n", MAX_COUNT_PARCEL);
             } catch (NumberFormatException e) {
                 System.out.println("Введите целое число.");
             }
