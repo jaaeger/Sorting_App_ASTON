@@ -1,12 +1,14 @@
 package aston.app.ui;
 
 import aston.app.entity.Parcel;
-import aston.app.input.NameField;
+import aston.app.input.model.NameField;
 import aston.app.ui.actions.AppInfoAction;
 import aston.app.ui.actions.ExitAction;
+import aston.app.ui.actions.InputAction;
 import aston.app.ui.actions.MenuAction;
 import aston.app.ui.actions.SearchAction;
 import aston.app.ui.actions.ShowInfoAction;
+import aston.app.ui.actions.SortAction;
 
 import java.util.Comparator;
 import java.util.EnumMap;
@@ -34,13 +36,11 @@ public class ConsoleUI {
     }
 
     private void registerActions() {
-        ConsoleContext ctx = new ConsoleContext(in, parcels, comparators);
-
         addAction(new AppInfoAction());
         addAction(new ShowInfoAction());
-        // addAction(new InputAction());
-        // addAction(new SortAction());
-        // addAction(new SearchAction());
+        addAction(new InputAction());
+        addAction(new SortAction());
+        addAction(new SearchAction());
         addAction(new ExitAction(() -> running = false));
     }
 

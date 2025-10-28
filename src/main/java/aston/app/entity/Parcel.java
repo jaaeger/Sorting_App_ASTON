@@ -1,6 +1,6 @@
 package aston.app.entity;
 
-import aston.app.input.NameClass;
+import aston.app.input.model.NameClass;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;

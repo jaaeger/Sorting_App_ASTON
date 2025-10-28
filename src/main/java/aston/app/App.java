@@ -1,10 +1,11 @@
 package aston.app;
 
+import aston.app.core.comparator.ParcelComparators;
 import aston.app.entity.ExpressParcel;
 import aston.app.entity.InternationalParcel;
 import aston.app.entity.Parcel;
 import aston.app.entity.StandardParcel;
-import aston.app.input.NameField;
+import aston.app.input.model.NameField;
 import aston.app.ui.ConsoleUI;
 
 import java.time.LocalDate;
@@ -27,46 +28,14 @@ public class App {
 
         Map<NameField, Comparator<? super Parcel>> comparators = new EnumMap<>(NameField.class);
 
-        comparators.put(
-                NameField.RECIPIENT_NAME,
-                Comparator.comparing(
-                        Parcel::getRecipientName,
-                        Comparator.nullsLast(String::compareToIgnoreCase)
-                )
-        );
-        comparators.put(
-                NameField.WEIGHT,
-                Comparator.comparingDouble(Parcel::getWeight)
-        );
-        comparators.put(
-                NameField.TRACKING_NUMBER,
-                Comparator.comparingInt(Parcel::getTrackingNumber)
-        );
+        comparators.put(NameField.RECIPIENT_NAME, ParcelComparators.byRecipientName());
+        comparators.put(NameField.WEIGHT, ParcelComparators.byWeight());
+        comparators.put(NameField.TRACKING_NUMBER, ParcelComparators.byTrackingNumber());
 
 
-        comparators.put(
-                NameField.MAX_DIMENSION,
-                Comparator.comparing(
-                        (Parcel p) -> (p instanceof StandardParcel sp) ? sp.getMaxDimension() : null,
-                        Comparator.nullsLast(Integer::compareTo)
-                )
-        );
-
-        comparators.put(
-                NameField.DESTINATION_COUNTRY,
-                Comparator.comparing(
-                        (Parcel p) -> (p instanceof InternationalParcel ip) ? ip.getDestinationCountry() : null,
-                        Comparator.nullsLast(String::compareToIgnoreCase)
-                )
-        );
-
-        comparators.put(
-                NameField.DELIVERY_DEADLINE,
-                Comparator.comparing(
-                        (Parcel p) -> (p instanceof ExpressParcel ep) ? ep.getDeliveryDeadline() : null,
-                        Comparator.nullsLast(java.time.LocalDate::compareTo)
-                )
-        );
+        comparators.put(NameField.MAX_DIMENSION, ParcelComparators.byMaxDimension());
+        comparators.put(NameField.DESTINATION_COUNTRY, ParcelComparators.byDestinationCountry());
+        comparators.put(NameField.DELIVERY_DEADLINE, ParcelComparators.byDeliveryDeadline());
 
         ConsoleUI ui = new ConsoleUI(new Scanner(System.in), list, comparators);
         ui.run();

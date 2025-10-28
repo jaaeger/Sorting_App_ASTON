@@ -1,4 +1,4 @@
-package aston.app.sorting;
+package aston.app.core.sorting;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,7 +12,8 @@ import java.util.function.Function;
 public final class SortingClasses {
     private static final int POOL_SIZE = 4;
 
-    public static <T> void sortList(String type, List<T> list, Comparator<T> comparator) {
+    public static <T> void sortList(String type, List<T> list, Comparator<? super T> comparator) {
+
         validateSortingParameters(type, list, comparator);
 
         if (list.isEmpty()) {
@@ -29,7 +30,7 @@ public final class SortingClasses {
         }
     }
 
-    public static <K, V> List<Map.Entry<K, V>> sortMapByValue(String type, Map<K, V> map, Comparator<V> comparator) {
+    public static <K, V> List<Map.Entry<K, V>> sortMapByValue(String type, Map<K, V> map, Comparator<? super V> comparator) {
         validateMapParameters(type, map, comparator);
 
         List<Map.Entry<K, V>> entries = new ArrayList<>(map.entrySet());
@@ -55,7 +56,7 @@ public final class SortingClasses {
         return entries;
     }
 
-    public static <T> void sortByNumericField(String type, List<T> list, Comparator<T> comparator,
+    public static <T> void sortByNumericField(String type, List<T> list, Comparator<? super T> comparator,
                                               Function<T, Integer> getField) {
         validateSortingParameters(type, list, comparator);
 
@@ -100,7 +101,7 @@ public final class SortingClasses {
         }
     }
 
-    private static <T> void validateSortingParameters(String type, List<T> list, Comparator<T> comparator) {
+    private static <T> void validateSortingParameters(String type, List<T> list, Comparator<? super T> comparator) {
         if (type == null || type.trim().isEmpty()) {
             throw new IllegalArgumentException("Тип алгоритма не может быть null или пустым");
         }
@@ -124,7 +125,7 @@ public final class SortingClasses {
         }
     }
 
-    private static <T> ForkJoinTask<Void> getTask(String type, List<T> list, Comparator<T> comparator) {
+    private static <T> ForkJoinTask<Void> getTask(String type, List<T> list, Comparator<? super T> comparator) {
         return switch (type.trim()) {
             case "quickSort" -> new QuickSortTask<>(list, comparator, 0, list.size() - 1);
             case "mergeSort" -> new MergeSortTask<>(list, comparator, 0, list.size() - 1);

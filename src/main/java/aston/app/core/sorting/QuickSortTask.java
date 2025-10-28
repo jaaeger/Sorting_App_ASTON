@@ -1,4 +1,4 @@
-package aston.app.sorting;
+package aston.app.core.sorting;
 
 import lombok.RequiredArgsConstructor;
 
@@ -10,7 +10,7 @@ import java.util.concurrent.RecursiveAction;
 @RequiredArgsConstructor
 public class QuickSortTask<T> extends RecursiveAction {
     private final List<T> list;
-    private final Comparator<T> comparator;
+    private final Comparator<? super T> comparator;
     private final int low;
     private final int high;
 
@@ -24,7 +24,7 @@ public class QuickSortTask<T> extends RecursiveAction {
         }
     }
 
-    private static <T> int partition(List<T> l, Comparator<T> c, int low, int high) {
+    private static <T> int partition(List<T> l, Comparator<? super T> c, int low, int high) {
         int pivotIndex = low + (high - low) / 2;
         T pivot = l.get(pivotIndex);
         Collections.swap(l, pivotIndex, low);

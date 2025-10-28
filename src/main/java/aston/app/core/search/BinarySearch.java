@@ -1,4 +1,4 @@
-package aston.app.search;
+package aston.app.core.search;
 
 import aston.app.entity.ExpressParcel;
 import aston.app.entity.InternationalParcel;
@@ -12,16 +12,30 @@ import java.util.function.Function;
 public final class BinarySearch {
 
     public static <T, K extends Comparable<? super K>> int search(List<T> list, K key, Function<T, K> keyExtractor) {
+
+        if (list == null) {
+            throw new IllegalArgumentException("Список не может быть null");
+        }
+        if (keyExtractor == null) {
+            throw new IllegalArgumentException("Извлекатель ключа (keyExtractor) не может быть null");
+        }
+        if (key == null) {
+            throw new IllegalArgumentException("Ключ поиска не может быть null");
+        }
+
         int left = 0;
         int right = list.size() - 1;
+
         while (left <= right) {
+
             int mid = (left + right) / 2;
             K midKey = keyExtractor.apply(list.get(mid));
-            int c = midKey.compareTo(key);
-            if (c == 0) {
+
+            int compareResult = midKey.compareTo(key);
+
+            if (compareResult == 0) {
                 return mid;
-            }
-            if (c < 0) {
+            } else if (compareResult < 0) {
                 left = mid + 1;
             } else {
                 right = mid - 1;

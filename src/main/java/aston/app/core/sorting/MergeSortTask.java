@@ -1,4 +1,4 @@
-package aston.app.sorting;
+package aston.app.core.sorting;
 
 import lombok.RequiredArgsConstructor;
 
@@ -10,7 +10,7 @@ import java.util.concurrent.RecursiveAction;
 @RequiredArgsConstructor
 public class MergeSortTask<T> extends RecursiveAction {
     private final List<T> list;
-    private final Comparator<T> comparator;
+    private final Comparator<? super T> comparator;
     private final int left;
     private final int right;
 
@@ -25,7 +25,7 @@ public class MergeSortTask<T> extends RecursiveAction {
         }
     }
 
-    private static <T> void merge(List<T> l, Comparator<T> c, int left, int mid, int right) {
+    private static <T> void merge(List<T> l, Comparator<? super T> c, int left, int mid, int right) {
         int n1 = mid - left + 1;
         int n2 = right - mid;
 

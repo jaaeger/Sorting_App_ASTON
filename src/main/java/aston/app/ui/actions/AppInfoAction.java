@@ -1,6 +1,6 @@
 package aston.app.ui.actions;
 
-import aston.app.input.NameField;
+import aston.app.input.model.NameField;
 import aston.app.ui.ConsoleContext;
 
 import java.util.Comparator;

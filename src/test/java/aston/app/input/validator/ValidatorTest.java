@@ -1,7 +1,6 @@
-package aston.app.ValidatorTest;
+package aston.app.input.validator;
 
-import aston.app.input.NameField;
-import aston.app.validation.Validator;
+import aston.app.input.model.NameField;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

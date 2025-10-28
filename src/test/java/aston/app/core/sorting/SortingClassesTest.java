@@ -1,6 +1,7 @@
-package aston.app.sorting;
+package aston.app.core.sorting;
 
-import aston.app.comparator.ParcelComparators;
+import aston.app.core.comparator.ParcelComparators;
+import aston.app.core.sorting.SortingClasses;
 import aston.app.entity.Parcel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

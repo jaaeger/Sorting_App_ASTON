@@ -1,4 +1,4 @@
-package aston.app.input;
+package aston.app.input.model;
 
 import aston.app.entity.ExpressParcel;
 import aston.app.entity.InternationalParcel;

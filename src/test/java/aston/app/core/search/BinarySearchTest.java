@@ -1,5 +1,6 @@
-package aston.app.search;
+package aston.app.core.search;
 
+import aston.app.core.search.BinarySearch;
 import aston.app.entity.ExpressParcel;
 import aston.app.entity.InternationalParcel;
 import aston.app.entity.Parcel;

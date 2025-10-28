@@ -1,7 +1,7 @@
 package aston.app.ui;
 
 import aston.app.entity.Parcel;
-import aston.app.input.NameField;
+import aston.app.input.model.NameField;
 
 import java.util.Comparator;
 import java.util.EnumMap;

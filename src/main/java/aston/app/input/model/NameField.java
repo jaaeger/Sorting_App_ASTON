@@ -1,4 +1,4 @@
-package aston.app.input;
+package aston.app.input.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public enum NameField {
     private final NameClass nameClass;
     private final String description;
 
-    public boolean ifForClass(String type) {
-        return type.equals(nameClass.getNameClass()) || nameClass.getNameClass().equals(NameClass.PARCEL.getNameClass());
+    public boolean isApplicableTo(NameClass type) {
+        return this.nameClass == NameClass.PARCEL || this.nameClass == type;
     }
 }
