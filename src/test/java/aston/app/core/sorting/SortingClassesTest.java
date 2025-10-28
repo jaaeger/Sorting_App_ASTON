@@ -97,14 +97,14 @@ public class SortingClassesTest {
         }
 
         @Test
-        public void when_MergeSortByNumericField_then_ParcelSortedByNumericField() {
-            SortingClasses.sortByNumericField("mergeSort", list, ParcelComparators.byTrackingNumber(), Parcel::getTrackingNumber);
+        public void when_QuickSortByNumericField_then_ParcelSortedByNumericField() {
+            SortingClasses.sortByNumericField("quickSort", list, ParcelComparators.byTrackingNumber(), Parcel::getTrackingNumber);
 
-            Assertions.assertEquals(parcel2, list.get(0)); // 1010
-            Assertions.assertEquals(parcel1, list.get(1)); // 1212
-            Assertions.assertEquals(parcel3, list.get(2)); // 777 (нечётный, на месте)
-            Assertions.assertEquals(parcel4, list.get(3)); // 1111 (нечётный, на месте)
-            Assertions.assertEquals(parcel5, list.get(4)); // 1414
+            Assertions.assertEquals(parcel2, list.get(0));
+            Assertions.assertEquals(parcel1, list.get(1));
+            Assertions.assertEquals(parcel3, list.get(2));
+            Assertions.assertEquals(parcel4, list.get(3));
+            Assertions.assertEquals(parcel5, list.get(4));
         }
     }
 
